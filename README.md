@@ -1,20 +1,42 @@
-# 📡 Trump Analyzer — Real-Time News Trading Engine
+<div align="center">
 
-> An autonomous, LLM-powered squawk box that listens to the entire financial firehose, reasons about what moves markets, and pulls the trigger — in seconds.
+# ⚡ Squawk Box
 
-When Trump tweets a tariff, when Powell opens his mouth, when a missile hits a tanker in the Strait of Hormuz — futures move in the first 30 seconds. This system is built to be in the trade before the headline finishes loading on Bloomberg.
+### Real-time financial news trading engine. Listens to the firehose, reasons with an LLM, pulls the trigger.
+
+![News Feed](docs/news-feed.jpg)
+
+</div>
+
+When Trump tweets a tariff, when Powell opens his mouth, when a missile hits a tanker in the Strait of Hormuz — futures move in the first 30 seconds. **Squawk Box** is built to be in the trade before the headline finishes loading on Bloomberg.
 
 ---
 
 ## 🔥 What It Does
 
-A full-stack, end-to-end news trading pipeline that runs on your own machine:
+A full-stack, end-to-end news trading pipeline running locally on your own machine:
 
 1. **Ingests** breaking news from Telegram channels, Google News, Yahoo Finance, FinancialJuice, and SEC EDGAR — concurrently, in real time.
-2. **Filters** the noise using a hand-tuned regex matrix that knows what actually moves ES, NQ, BTC, gold, and oil.
+2. **Filters** the noise with a hand-tuned regex matrix that knows what actually moves ES, NQ, BTC, gold, and oil.
 3. **Reasons** about each surviving headline with a locally-hosted **DeepSeek R1 14B** LLM (via Ollama) — extracting direction, instrument, confidence, urgency, and magnitude as structured JSON.
 4. **Executes** trades automatically through a paper-trading simulator *or* live Binance Futures, with tight stops, trailing exits, position sizing tiers, and daily loss circuit breakers.
 5. **Broadcasts** everything to a live web dashboard over WebSockets — with a text-to-speech squawk so you literally *hear* the news as it breaks.
+
+---
+
+## 📺 The Dashboard
+
+<div align="center">
+
+**Live trading view — LLM signals, open positions, equity curve, and market mood, all in one pane.**
+
+![Trading View](docs/trading-view.png)
+
+**The news firehose — every headline tagged by source and category, in real time.**
+
+![News Feed](docs/news-feed.jpg)
+
+</div>
 
 ---
 
@@ -22,7 +44,7 @@ A full-stack, end-to-end news trading pipeline that runs on your own machine:
 
 Most "news trading" repos stop at sentiment scoring on Twitter. This one is the whole stack:
 
-- **Source-aware filtering** — FinancialJuice headlines (pre-curated by pros) get a fast lane; raw RSS gets the strict regex gauntlet.
+- **Source-aware filtering** — FinancialJuice headlines (pre-curated by pros) get a fast lane; raw RSS runs the strict regex gauntlet.
 - **Structured LLM signals** — no vibes-based sentiment. Every signal is a typed `LLMSignal` with `direction`, `confidence`, `urgency`, `magnitude`, and reasoning. R1's `<think>` chain-of-thought is stripped before parsing.
 - **Two-tier urgency** — critical headlines (Fed, Trump, geopolitics) jump the queue; everything else gets batched.
 - **Real risk management** — per-instrument cooldowns, conflicting-signal suppression, trailing stops, max-duration auto-close, daily loss caps. Not a toy.
@@ -50,8 +72,8 @@ Most "news trading" repos stop at sentiment scoring on Twitter. This one is the 
 
 ```bash
 # 1. Clone
-git clone https://github.com/Kiankk/Trump-Analyzer.git
-cd Trump-Analyzer
+git clone https://github.com/Kiankk/squawk-box.git
+cd squawk-box
 
 # 2. Install
 pip install -r requirements.txt
@@ -98,9 +120,9 @@ Position sizing scales with model confidence — small, medium, or large.
 ## 📊 What You See
 
 - A live web dashboard showing every headline as it lands, color-coded by category.
-- LLM verdicts streamed in: `LONG NQ · conf 0.91 · IMMEDIATE · LARGE — "Powell signals September cut"`.
+- LLM verdicts streamed in: `SHORT DXY · conf 0.85 · IMMEDIATE · TRADEABLE — "China sets yuan midpoint at strongest level since 2023"`.
 - Open positions with live P&L, trailing stops, time-to-auto-close.
-- A daily ledger of every trade and the headline that triggered it.
+- Equity curve, win rate, daily trade count, and market mood — all on one screen.
 
 ---
 
@@ -126,4 +148,8 @@ Issues and PRs welcome. If you find a category of headline this misses, open an 
 
 ---
 
+<div align="center">
+
 ⭐ **Star this repo** if you want to follow along — this is going to keep getting better.
+
+</div>
